@@ -1,0 +1,46 @@
+﻿@using EntityLayer.Concrete
+@model List<Adress>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Örnek Tablo</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2 id="baslikAdres">Adress Tablosu</h2>
+    <table id="table">
+        <tr>
+            <th id="baslik1">Id</th>
+            <th id="baslik2">Adress</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.adressName</td>
+            </tr>
+        }
+
+    </table>
+</body>
+</html>

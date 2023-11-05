@@ -1,0 +1,183 @@
+﻿@using EntityLayer.Concrete
+@model List<MVCFormData>
+
+@{
+    ViewData["Title"] = "DefaultCopy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Adres Ekle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+            .form-group label {
+                display: block;
+                font-weight: bold;
+            }
+
+            .form-group input {
+                width: 100%;
+                padding: 10px;
+                margin: 5px 0;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+            }
+
+            .form-group button {
+                background-color: #007BFF;
+                color: #fff;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 3px;
+                cursor: pointer;
+            }
+
+                .form-group button:hover {
+                    background-color: #0056b3;
+                }
+    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <h2 id="title">Adres Ekle</h2>
+
+        <form id="myForm" method="post" asp-action="Default" asp-controller="Home">
+            <div class="form-group" id="formFields">
+            </div>
+        </form>
+    </div>
+    </div>
+    @await Component.InvokeAsync("_AdressListCopy")
+</body>
+
+<script src="~/sneat-1.0.0/assets/vendor/libs/jquery/jquery.js"></script>
+
+
+
+<script>
+    // Sayfa yüklendiğinde bu işlev çalışır
+    $(document).ready(function () {
+        // formData, bir dizi veriyi içerir ve bu veriler HTML'de kullanılacak
+        var formData = @Html.Raw(ViewData["FormDataJson"]);
+
+        // HTML oluşturmak için kullanılacak boş bir dize
+        var formHtml = '';
+
+        // HTML oluşturulan alanı hedefleyen jQuery nesnesi
+        var formFields = $("#formFields");
+
+        // Sayfa yüklendiğinde bu işlev çalışır
+        $(document).ready(function () {
+            // HTML oluşturulan alanı hedefleyen jQuery nesnesi
+            var formFieldsContainer = $('#formFields');
+
+            // formData dizisindeki her bir veri için döngü
+            for (var i = 0; i < formData.length; i++) {
+                // formData dizisinden ilgili veriyi seç
+                var form = formData[i];
+
+                // Eğer verinin "FormName" özelliği "Kullanıcı Kayıt Formu" ise
+                if (formData[i].FormName == "Kullanıcı Kayıt Formu") {
+                    // Seçilen form verisi için döngü
+                    for (var j = 0; j < form.FormElements.length; j++) {
+                        // Formun içindeki öğeyi seç
+                        var element = form.FormElements[j];
+
+                        // Öğenin türü "LABEL" ise
+                        if (element.ElementType === "LABEL") {
+                            // Etiket HTML'i oluştur ve formHtml değişkenine ekle
+                            formHtml += '<label id="label" for="adres">' + element.ElementName + '</label>';
+                        }
+                        // Öğenin türü "INPUT" ise
+                        else if (element.ElementType === "INPUT") {
+                            // Giriş alanı HTML'i oluştur ve formHtml değişkenine ekle
+                            formHtml += '<input id="inputName" type="text" name="' + element.ElementName + '" placeholder="' + element.ElementName + '" />';
+                            formHtml += '</br>';
+                        }
+                        // Öğenin türü "BUTTON" ise
+                        else if (element.ElementType === "BUTTON") {
+                            // Düğme HTML'i oluştur ve formHtml değişkenine ekle
+                            formHtml += '</br><div><button  id="addAdressed" class="btn btn-info" type="submit">' + element.ElementName + '</button></div> ';
+                        }
+                    }
+                    // Oluşturulan HTML'i "formFieldsContainer" içine ekleyin
+                    formFieldsContainer.append(formHtml);
+                }
+                // Eğer verinin "FormName" özelliği "Table" ise
+                else if (formData[i].FormName == "Table") {
+                    // Seçilen form verisi için döngü
+                    for (var j = 0; j < form.FormElements.length; j++) {
+                        // Formun içindeki öğeyi seç
+                        var element = form.FormElements[j];
+
+                        // Eğer öğenin "Description" özelliği "Table Alanı" ise
+                        if (element.Description === "Table Alanı") {
+                            // Sayfanın başlık kısmının metnini belirli bir öğe ile güncelle
+                            $("#baslikAdres").text(element.ElementName);
+                        }
+                        // Eğer öğenin "Description" özelliği "TH baslik" ise
+                        else if (element.Description === "TH baslik") {
+                            // İlk tablo başlığının metnini belirli bir öğe ile güncelle
+                            $("#title1").text(element.ElementName);
+                        }
+                        // Eğer öğenin "Description" özelliği "TH baslik2" ise
+                        else if (element.Description === "TH baslik2") {
+                            // İkinci tablo başlığının metnini belirli bir öğe ile güncelle
+                            $("#title2").text(element.ElementName);
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        // Formun submit işlemi engellenir.
+        $("#myForm").submit(function (e) {
+            e.preventDefault();
+
+            // Form alanlarının verileri alınır
+            var formData = {
+                adressName: $("#inputName").val()
+            };
+
+            // Controller aksiyonuna POST isteği gönderilir
+            $.ajax({
+                url: "/Home/Default",
+                type: "POST",
+                data: formData,
+                success: function (result) {
+                    // İşlem sonucuna göre yönlendirme yapabilirsiniz
+                    location.reload();
+
+
+                }
+            });
+
+
+        });
+    });
+</script>
+</html>
