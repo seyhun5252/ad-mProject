@@ -17,7 +17,7 @@ namespace adım_project.Controllers
     public class HomeController : Controller
     {
         AdressManager adressManager = new AdressManager(new EfAdressDal());
-        MVCFormDataManager mVCFormDataManager = new MVCFormDataManager(new EfMVCFormDataDal(), new EfFormElementDal());
+        MVCFormDataManager mVCFormDataManager = new MVCFormDataManager(new EfMVCFormDataDal());
         private readonly UserManager<AppUser> _userManager;
 
         public HomeController(UserManager<AppUser> userManager)
@@ -52,7 +52,7 @@ namespace adım_project.Controllers
                 var value = await _userManager.FindByNameAsync(User.Identity.Name);
                 foreach (var item in mVCFormData)
                 {
-                    
+
                     item.AppUserID = value.Id;
                 }
 

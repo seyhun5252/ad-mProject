@@ -21,7 +21,6 @@ namespace adım_project.ViewComponenets
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            //var values = adressManager.TGetList();
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             var values = adressManager.GetByFilter(x=>x.AppUserID == user.Id);
             return View(values);

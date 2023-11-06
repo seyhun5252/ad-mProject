@@ -17,11 +17,12 @@ namespace DataAccessLayer.EntityFramework
         {
             using var dbContext = new Context();
 
+            // Veritabanından MVCFormData nesnelerini alırken FormElements ilişkisini de dahil eder.
             var combinedData = dbContext.MVCFormDatas
                             .Include(m => m.FormElements)
                             .ToList();
 
-            return combinedData.ToList();
+            return combinedData;
 
         }
 
@@ -29,12 +30,12 @@ namespace DataAccessLayer.EntityFramework
         {
 
             using var dbContext = new Context();
+            // Verilen 'values' listesini 'userId' değerine göre filtreler.
             List<MVCFormData> formDataGroupedByAppUser = values.Where(formData => formData.AppUserID == userId)
                                                     .ToList();
 
-            var c = formDataGroupedByAppUser.ToList();
 
-            return c;
+            return formDataGroupedByAppUser;
         }
     }
 }

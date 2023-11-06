@@ -14,12 +14,10 @@ namespace BussinessLayer.Concrete
     public class MVCFormDataManager : IMVCFormDataService
     {
         IMVCFormDataDal _mVCFormDataDal;
-        IFormElementDal _formElementDal;
 
-        public MVCFormDataManager(IMVCFormDataDal mVCFormDataDal, IFormElementDal formElementDal)
+        public MVCFormDataManager(IMVCFormDataDal mVCFormDataDal)
         {
             _mVCFormDataDal = mVCFormDataDal;
-            _formElementDal = formElementDal;
 
         }
 
@@ -64,12 +62,12 @@ namespace BussinessLayer.Concrete
         public async Task<List<MVCFormData>> TGetListUserId(AppUser appUser)
         {
 
-            List<MVCFormData> values = _mVCFormDataDal.GetListByFilter(x => x.AppUserID == appUser.Id);
-            
-            
+            List<MVCFormData> values =  _mVCFormDataDal.GetListByFilter(x => x.AppUserID == appUser.Id);
+
+
             if (values.Count > 0)
             {
-                
+
                 var getInculede = _mVCFormDataDal.GetFormDataInculede();
                 return _mVCFormDataDal.GetFormData(getInculede, appUser.Id);
             }

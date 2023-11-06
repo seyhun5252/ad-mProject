@@ -9,7 +9,7 @@ namespace adım_project.ViewComponenets
 {
     public class _NavBar : ViewComponent
     {
-        MVCFormDataManager mVCFormDataManager = new MVCFormDataManager(new EfMVCFormDataDal(), new EfFormElementDal());
+        MVCFormDataManager mVCFormDataManager = new MVCFormDataManager(new EfMVCFormDataDal());
         private readonly UserManager<AppUser> _userManager;
 
         public _NavBar(UserManager<AppUser> userManager)

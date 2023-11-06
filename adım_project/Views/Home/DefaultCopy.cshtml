@@ -105,20 +105,15 @@
                         // Formun içindeki öğeyi seç
                         var element = form.FormElements[j];
 
-                        // Öğenin türü "LABEL" ise
                         if (element.ElementType === "LABEL") {
-                            // Etiket HTML'i oluştur ve formHtml değişkenine ekle
                             formHtml += '<label id="label" for="adres">' + element.ElementName + '</label>';
                         }
-                        // Öğenin türü "INPUT" ise
                         else if (element.ElementType === "INPUT") {
-                            // Giriş alanı HTML'i oluştur ve formHtml değişkenine ekle
                             formHtml += '<input id="inputName" type="text" name="' + element.ElementName + '" placeholder="' + element.ElementName + '" />';
                             formHtml += '</br>';
                         }
                         // Öğenin türü "BUTTON" ise
                         else if (element.ElementType === "BUTTON") {
-                            // Düğme HTML'i oluştur ve formHtml değişkenine ekle
                             formHtml += '</br><div><button  id="addAdressed" class="btn btn-info" type="submit">' + element.ElementName + '</button></div> ';
                         }
                     }
@@ -132,19 +127,13 @@
                         // Formun içindeki öğeyi seç
                         var element = form.FormElements[j];
 
-                        // Eğer öğenin "Description" özelliği "Table Alanı" ise
                         if (element.Description === "Table Alanı") {
-                            // Sayfanın başlık kısmının metnini belirli bir öğe ile güncelle
                             $("#baslikAdres").text(element.ElementName);
                         }
-                        // Eğer öğenin "Description" özelliği "TH baslik" ise
                         else if (element.Description === "TH baslik") {
-                            // İlk tablo başlığının metnini belirli bir öğe ile güncelle
                             $("#title1").text(element.ElementName);
                         }
-                        // Eğer öğenin "Description" özelliği "TH baslik2" ise
                         else if (element.Description === "TH baslik2") {
-                            // İkinci tablo başlığının metnini belirli bir öğe ile güncelle
                             $("#title2").text(element.ElementName);
                         }
                     }
